@@ -21,7 +21,7 @@ os.environ['GROQ_API_BASE'] = 'https://api.groq.com/openai/v1'
 experiment_name = "/Workspace/Users/acct_name"
 mlflow.set_experiment(experiment_name=experiment_name)
 
-print(f"✅ Environment variables loaded and MLflow experiment is set to: '{experiment_name}'")
+print(f" Environment variables loaded and MLflow experiment is set to: '{experiment_name}'")
 
 # --- Helper function for fetching Google Gemini models ---
 def _get_gemini_models():
@@ -37,7 +37,7 @@ def _get_gemini_models():
             if 'generateContent' in model.get('supportedGenerationMethods', [])
         ]
     except Exception as e:
-        print(f"⚠️ Warning: Could not fetch models for Google. Error: {e}")
+        print(f" Warning: Could not fetch models for Google. Error: {e}")
         return ['gemini-1.5-flash-latest'] # Fallback
 
 # --- Helper function for fetching Groq models ---
@@ -50,7 +50,7 @@ def _get_groq_models():
         data = response.json()
         return [model['id'] for model in data.get('data', [])]
     except Exception as e:
-        print(f"⚠️ Warning: Could not fetch models for Groq. Error: {e}")
+        print(f" Warning: Could not fetch models for Groq. Error: {e}")
         return ['llama3-70b-8192', 'llama3-8b-8192'] # Fallback
 
 # --- Helper function for fetching Ollama-based models ---
@@ -62,7 +62,7 @@ def _get_ollama_models(base_url: str):
         data = response.json()
         return [model['name'] for model in data.get('models', [])]
     except Exception as e:
-        print(f"⚠️ Warning: Could not fetch models from {base_url}. Error: {e}")
+        print(f" Warning: Could not fetch models from {base_url}. Error: {e}")
         return [] # Fallback
 
 # --- Helper function for Gemini ---
@@ -113,7 +113,7 @@ def get_ai_response(provider: str, model: str, prompt: str) -> str:
     except Exception as e:
         return f"Error: An unexpected error occurred with {provider}: {e}"
 
-print("✅ Unified AI provider functions are defined.")
+print(" Unified AI provider functions are defined.")
 
 # --- Dynamically fetch models for all providers ---
 print("Fetching available models from all providers...")
@@ -123,7 +123,7 @@ model_options = {
     'ollama': _get_ollama_models(os.environ['OLLAMA_API_BASE']),
     'zinghr_ollama': _get_ollama_models(os.environ['ZINGHR_OLLAMA_API_BASE'])
 }
-print("✅ Models fetched successfully.")
+print(" Models fetched successfully.")
 
 # Global variables for chat state
 chat_active = False
@@ -160,3 +160,4 @@ provider_dropdown.observe(update_models_dropdown, names='value')
 # Set the initial model options based on the first provider
 if provider_dropdown.value:
     update_models_dropdown({'new': provider_dropdown.value})
+
